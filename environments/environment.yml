@@ -1,0 +1,10 @@
+name: dehost-and-verify
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bwa=0.7.17=hed695b0_7
+  - samtools=1.10=h9402c20_2
+  - kraken2=2.0.9beta=pl526hc9558a2_0
+  - bracken=2.6.0=py37h9a982cc_2
