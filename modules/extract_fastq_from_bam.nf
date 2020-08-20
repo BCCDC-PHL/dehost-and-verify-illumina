@@ -1,6 +1,6 @@
 process extract_fastq_from_bam {
     tag { sample_id }
-
+    publishDir "${params.outdir}/dehosted_fastq", pattern: "${sample_id}_R*.fastq.gz", mode: 'copy'
     input:
     tuple val(sample_id), path(unmapped_bam)
 
