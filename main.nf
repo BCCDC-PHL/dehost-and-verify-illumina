@@ -18,9 +18,36 @@ workflow {
     ch_read_length = Channel.of(params.read_length)
     ch_taxonomy_level = Channel.of(params.taxonomy_level)
     ch_host_reference = Channel.of(params.host_reference)
+    ch_host_name = Channel.of(params.host_name)
+    ch_pathogen_name = Channel.of(params.pathogen_name)
+    ch_pre_dehosting_stage = Channel.of('pre_dehosting')
+    ch_post_dehosting_stage = Channel.of('post_dehosting')
     
     main:
-      estimate_abundance_pre_dehosting(ch_fastq, ch_kraken2_db, ch_bracken_db, ch_read_length, ch_taxonomy_level)
-      dehost(ch_fastq, ch_host_reference)
-      estimate_abundance_post_dehosting(dehost.out, ch_kraken2_db, ch_bracken_db, ch_read_length, ch_taxonomy_level)
+      estimate_abundance_pre_dehosting(
+        ch_fastq,
+	ch_kraken2_db,
+	ch_bracken_db,
+	ch_read_length,
+	ch_taxonomy_level,
+	ch_pre_dehosting_stage,
+	ch_host_name,
+	ch_pathogen_name
+      )
+
+      dehost(
+        ch_fastq,
+	ch_host_reference
+      )
+
+      estimate_abundance_post_dehosting(
+        dehost.out,
+	ch_kraken2_db,
+	ch_bracken_db,
+	ch_read_length,
+	ch_taxonomy_level,
+	ch_post_dehosting_stage,
+	ch_host_name,
+	ch_pathogen_name
+      )
 }
