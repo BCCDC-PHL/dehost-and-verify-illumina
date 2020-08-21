@@ -1,0 +1,20 @@
+on:
+  pull_request:
+    branches:
+    - master
+name: master Pull Request
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: create artifacts dir to save test logs
+      run: mkdir artifacts
+    - name: install Conda
+      run: bash .github/scripts/install_conda.sh
+    - name: install Nextflow
+      run: bash .github/scripts/install_nextflow.sh
+    - name: download hg38
+      run: bash .github/scripts/download_hg38.sh
+
