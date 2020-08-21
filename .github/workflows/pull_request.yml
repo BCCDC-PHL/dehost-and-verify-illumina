@@ -19,11 +19,15 @@ jobs:
       id: cache-hg38
       uses: actions/cache@v2
       with:
-        path: data/hg38.fa
+        path: ${HOME}/data/hg38.fa
         key: hg38
     - name: download hg38
       if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
     - name: Set up conda cache environment 
       run: bash .github/scripts/set_up_conda_cache.sh
-    
+    - uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: test_artifacts
+        path: artifacts
