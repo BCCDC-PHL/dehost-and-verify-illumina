@@ -17,4 +17,5 @@ jobs:
       run: bash .github/scripts/install_nextflow.sh
     - name: download hg38
       run: bash .github/scripts/download_hg38.sh
-
+    - name: Set up conda cache environment 
+      run: bash .github/scripts/set_up_conda_cache.sh
