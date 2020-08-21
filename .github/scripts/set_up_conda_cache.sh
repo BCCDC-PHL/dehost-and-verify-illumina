@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+
 export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
 
 
