@@ -8,3 +8,7 @@ This pipeline performs the following tasks:
 2. Performs 'de-hosting' by aligning reads against a reference genome using [bwa](https://github.com/lh3/bwa), and extracting unmapped reads using [samtools](https://github.com/samtools/samtools)
 3. Verifies that the remaining reads do not contain host-derived sequenced by again estimating relative abundances using the same method as in step 1.
 4. Prepares a brief report summarizing the efficacy of the de-hosting process.
+
+![workflow.png][]
+
+[workflow.png]: doc/images/workflow.png
