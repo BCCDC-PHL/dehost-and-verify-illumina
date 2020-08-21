@@ -3,6 +3,7 @@ set -eo pipefail
 
 echo Create kraken2 db .. >> artifacts/test_artifact.log
 
+conda init bash
 # environment name is suffixed by long alphanumeric string
 # but it always starts with 'dehost-and-verify'. Use grep to find it.
 conda activate $(conda info --envs | grep dehost-and-verify | cut -d ' ' -f 1)
