@@ -15,7 +15,15 @@ jobs:
       run: bash .github/scripts/install_conda.sh
     - name: install Nextflow
       run: bash .github/scripts/install_nextflow.sh
+    - name: cache hg38
+      id: cache-hg38
+      uses: actions/cache@v2
+      with:
+        path: data/hg38.fa
+        key: ${{ runner.os }}-hg38
     - name: download hg38
+      if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
     - name: Set up conda cache environment 
       run: bash .github/scripts/set_up_conda_cache.sh
+    
