@@ -11,10 +11,26 @@ jobs:
     - uses: actions/checkout@master
     - name: create artifacts dir to save test logs
       run: mkdir artifacts
+    - name: cache miniconda3
+      id: cache-miniconda3
+      uses: actions/cache@v2
+      with:
+        path: /opt/miniconda3
+        key: miniconda3
     - name: install Conda
+      if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
     - name: install Nextflow
       run: bash .github/scripts/install_nextflow.sh
+    - name: cache ncov2019
+      id: cache-ncov2019
+      uses: actions/cache@v2
+      with:
+        path: ${HOME}/data/MN908947.3.fa
+        key: ncov2019
+    - name: download ncov2019
+      if: steps.cache-ncov2019.outputs.cache-hit != 'true'
+      run: bash .github/scripts/download_ncov2019.sh
     - name: cache hg38
       id: cache-hg38
       uses: actions/cache@v2
