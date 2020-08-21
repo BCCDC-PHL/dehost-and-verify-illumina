@@ -42,6 +42,15 @@ jobs:
       run: bash .github/scripts/download_hg38.sh
     - name: Set up conda cache environment 
       run: bash .github/scripts/set_up_conda_cache.sh
+    - name: cache kraken2/bracken db
+      id: cache-kraken2-bracken-db
+      uses: actions/cache@v2
+      with:
+        path: ${HOME}/data/kraken2_bracken_db
+        key: kraken2_bracken_db
+    - name: create kraken2/bracken db
+      if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
+      run: bash .github/scripts/create_kraken2_and_bracken_database.sh
     - uses: actions/upload-artifact@v1
       if: always()
       with:
