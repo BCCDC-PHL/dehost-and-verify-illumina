@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-export PATH=/opt/miniconda3/bin:$PATH
+export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
 
 
 # first NF run will create the conda env in the cache dir
