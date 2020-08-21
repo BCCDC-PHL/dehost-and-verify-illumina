@@ -20,7 +20,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: data/hg38.fa
-        key: ${{ runner.os }}-hg38
+        key: hg38
     - name: download hg38
       if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
