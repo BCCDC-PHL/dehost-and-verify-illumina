@@ -15,10 +15,12 @@ jobs:
       id: cache-miniconda3
       uses: actions/cache@v2
       with:
-        path: /opt/miniconda3
+        path: |
+          /opt/miniconda3
+          ${HOME}/.bashrc
         key: miniconda3
     - name: install Conda
-      if: steps.cache-miniconda3.outputs.cache-hit != 'true'
+      # if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
     - name: install Nextflow
       run: bash .github/scripts/install_nextflow.sh
