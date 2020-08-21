@@ -5,11 +5,11 @@ export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
 
 # first NF run will create the conda env in the cache dir
 echo run pipeline with conda --cache to create cache.. >> artifacts/test_artifact.log
-export REPO=$PWD
-echo REPO=$REPO >> artifacts/test_artifact.log
+export REPO=${PWD}
+echo REPO=${REPO} >> artifacts/test_artifact.log
 cd ..
-echo PWD=$PWD >> $REPO/artifacts/test_artifact.log
-nextflow run main.nf \
+echo PWD=${PWD} >> ${REPO}/artifacts/test_artifact.log
+nextflow run ${REPO} \
        -profile conda \
        --cache ${HOME}/.conda/envs \
        --fastq_input .github/data/fastqs \
@@ -22,8 +22,8 @@ cat .nextflow.log | grep 'Conda create complete env=/home/runner/work/dehost-and
     
 rm -rf output && rm -rf work && rm -rf .nextflow*
 # second NF run will use the conda env created in the previous run
-echo re-run pipeline with conda --cache.. >> $REPO/artifacts/test_artifact.log
-NXF_VER=20.03.0-edge nextflow run $REPO \
+echo re-run pipeline with conda --cache.. >> ${REPO}/artifacts/test_artifact.log
+NXF_VER=20.03.0-edge nextflow run ${REPO} \
        -profile conda \
        --cache ${HOME}/.conda/envs \
        --fastq_input .github/data/fastqs \
