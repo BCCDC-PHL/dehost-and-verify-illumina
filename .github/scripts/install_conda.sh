@@ -15,5 +15,5 @@ wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.
     echo "conda activate base" >> ~/.bashrc
 
 conda update -n base conda
-conda config --add channel bioconda
-conda config --add channel conda-forge
+conda config --add channels bioconda
+conda config --add channels conda-forge
