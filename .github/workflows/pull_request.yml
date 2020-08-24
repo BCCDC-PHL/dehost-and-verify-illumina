@@ -31,7 +31,7 @@ jobs:
           ${HOME}/.nextflow
         key: nextflow
     - name: install Nextflow
-      if: steps.cache-nextflow.outputs.cache-hit != 'true'
+      # if: steps.cache-nextflow.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_nextflow.sh
     - name: cache ncov2019
       id: cache-ncov2019
