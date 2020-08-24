@@ -22,6 +22,8 @@ jobs:
     - name: install Conda
       # if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
+    - name: init Conda
+      run: bash .github/scripts/init_conda.sh
     - name: cache nextflow
       id: cache-nextflow
       uses: actions/cache@v2
