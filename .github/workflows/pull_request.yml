@@ -20,7 +20,7 @@ jobs:
           ${HOME}/.bashrc
         key: miniconda3
     - name: install Conda
-      if: steps.cache-miniconda3.outputs.cache-hit != 'true'
+      # if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
     - name: cache nextflow
       id: cache-nextflow
@@ -40,7 +40,7 @@ jobs:
         path: ${HOME}/data/MN908947.3.fa
         key: ncov2019
     - name: download ncov2019
-      if: steps.cache-ncov2019.outputs.cache-hit != 'true'
+      # if: steps.cache-ncov2019.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_ncov2019.sh
     - name: cache hg38
       id: cache-hg38
@@ -49,7 +49,7 @@ jobs:
         path: ${HOME}/data/hg38.fa
         key: hg38
     - name: download hg38
-      if: steps.cache-hg38.outputs.cache-hit != 'true'
+      # if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
     - name: cache conda environments
       id: cache-conda-envs
@@ -67,7 +67,7 @@ jobs:
         path: ${HOME}/data/kraken2_bracken_db
         key: kraken2_bracken_db
     - name: create kraken2/bracken db
-      if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
+      # if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
     - uses: actions/upload-artifact@v1
       if: always()
