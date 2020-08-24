@@ -13,7 +13,7 @@ echo PWD=${PWD} >> ${REPO}/artifacts/test_artifact.log
 nextflow run ${REPO} \
        -profile conda \
        --cache ${HOME}/.conda/envs \
-       --fastq_input .github/data/fastqs \
+       --fastq_input ${REPO}/.github/data/fastqs \
        --outdir output
 
 cp .nextflow.log ${REPO}/artifacts/cache_creation.conda.profile.nextflow.log
@@ -29,7 +29,7 @@ echo re-run pipeline with conda --cache.. >> ${REPO}/artifacts/test_artifact.log
 nextflow run ${REPO} \
        -profile conda \
        --cache ${HOME}/.conda/envs \
-       --fastq_input .github/data/fastqs \
+       --fastq_input ${REPO}/.github/data/fastqs \
        --outdir output
 
 cp .nextflow.log ${REPO}/artifacts/cache_use.conda.profile.nextflow.log
