@@ -3,9 +3,11 @@ set -eo pipefail
 
 echo Create kraken2 db .. >> artifacts/test_artifact.log
 
+cat ${HOME}/.bashrc >> artifacts/bashrc_artifact.txt
+
 # environment name is suffixed by long alphanumeric string
 # but it always starts with 'dehost-and-verify'. Use grep to find it.
-conda activate $(conda info --envs | grep dehost-and-verify | cut -d ' ' -f 1)
+source /opt/miniconda3/bin/activate $(conda info --envs | grep dehost-and-verify | cut -d ' ' -f 1)
 
 KRAKEN2_DB_NAME=${HOME}/data/kraken2_bracken_db
 
