@@ -58,7 +58,7 @@ jobs:
         path: ${HOME}/.conda/envs
         key: conda-envs
     - name: Set up conda cache environment
-      if: steps.cache-conda-envs.outputs.cache-hit != 'true'
+      # if: steps.cache-conda-envs.outputs.cache-hit != 'true'
       run: bash .github/scripts/set_up_conda_cache.sh
     - name: cache kraken2/bracken db
       id: cache-kraken2-bracken-db
