@@ -59,6 +59,11 @@ jobs:
     - name: create kraken2/bracken db
       if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
+    - uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: cache_artifacts
+        path: artifacts
   test:
     name: Run tests
     runs-on: ubuntu-latest
@@ -66,6 +71,40 @@ jobs:
     - uses: actions/checkout@master
     - name: create artifacts dir to save test logs
       run: mkdir -p artifacts
+    - name: cache miniconda3
+      id: cache-miniconda3
+      uses: actions/cache@v2
+      with:
+        path: |
+          /opt/miniconda3
+          /home/runner/.bashrc
+        key: miniconda3-v1
+    - name: cache nextflow
+      id: cache-nextflow
+      uses: actions/cache@v2
+      with:
+        path: |
+          /home/runner/bin/nextflow
+          /home/runner/.nextflow
+        key: nextflow-v2
+    - name: cache conda environments
+      id: cache-conda-envs
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/.conda/envs
+        key: conda-envs-v2
+    - name: cache hg38
+      id: cache-hg38
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/hg38.fa
+        key: hg38-v2
+    - name: cache kraken2/bracken db
+      id: cache-kraken2-bracken-db
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/kraken2_bracken_db
+        key: kraken2_bracken_db-v2
     - uses: actions/upload-artifact@v1
       if: always()
       with:
