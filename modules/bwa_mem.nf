@@ -1,5 +1,6 @@
 process bwa_mem {
     tag { sample_id }
+    label 'cpu8'
 
     input:
     tuple val(grouping_key), path(fastq), val(reference)

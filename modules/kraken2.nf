@@ -1,6 +1,6 @@
 process kraken2 {
     tag { sample_id }
-    
+    label 'cpu16'
     input:
     tuple val(grouping_key), path(reads), path(kraken2_db)
 

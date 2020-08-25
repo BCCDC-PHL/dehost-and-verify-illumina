@@ -1,5 +1,6 @@
 process remove_mapped_reads {
     tag { sample_id }
+    label 'cpu4'
 
     input:
     tuple val(sample_id), path(sorted_bam)
