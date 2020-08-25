@@ -33,5 +33,7 @@ nextflow run ./main.nf \
 
 cp .nextflow.log artifacts/test.nextflow.log
 
+cp -r test_output artifacts
+
 
 rm -rf results && rm -rf work && rm -rf .nextflow*
