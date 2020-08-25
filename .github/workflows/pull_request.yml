@@ -57,7 +57,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /home/runner/data/kraken2_bracken_db
-        key: kraken2_bracken_db-v2
+        key: kraken2_bracken_db-v3
     - name: create kraken2/bracken db
       if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
@@ -106,7 +106,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /home/runner/data/kraken2_bracken_db
-        key: kraken2_bracken_db-v2
+        key: kraken2_bracken_db-v3
     - name: test pipeline
       run: bash .github/scripts/test_pipeline.sh
     - uses: actions/upload-artifact@v1

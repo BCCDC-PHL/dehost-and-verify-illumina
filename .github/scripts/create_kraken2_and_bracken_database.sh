@@ -26,3 +26,4 @@ bracken-build -d $KRAKEN2_DB_NAME -l 150
 
 kraken2-build --db $KRAKEN2_DB_NAME --clean
 
+ll $KRAKEN2_DB_NAME >> ${REPO}/artifacts/kraken2_bracken_db_contents.txt
