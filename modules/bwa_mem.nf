@@ -22,12 +22,12 @@ process bwa_mem {
     ln -s ${reference}.pac .
     ln -s ${reference}.sa .
     bwa mem \
-      -t 8 \
+      -t ${cpus} \
       ${reference} \
       ${fastq} \
       | samtools sort \
         -n \
-        -@ 8 \
+        -@ ${cpus} \
         -T "temp" \
         -O BAM \
         -o ${sample_id}.sorted.bam \

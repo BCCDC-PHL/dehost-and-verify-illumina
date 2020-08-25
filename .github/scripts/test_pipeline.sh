@@ -20,7 +20,7 @@ echo bracken db: $KRAKEN2_BRACKEN_DB >> artifacts/test_artifact.log
 # run current pull request code
 
 nextflow run ./main.nf \
-       -profile conda \
+       -profile githubtest,conda \
        --cache ${HOME}/.conda/envs \
        --fastq_input ${REPO}/.github/data/fastqs \
        --host_reference ${REF_FILE} \

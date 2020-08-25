@@ -1,6 +1,5 @@
 process kraken2 {
     tag { sample_id }
-    cpus 8
     
     input:
     tuple val(grouping_key), path(reads), path(kraken2_db)
@@ -18,7 +17,7 @@ process kraken2 {
     }
     """
     kraken2 \
-      --threads 8 \
+      --threads ${cpus} \
       --db ${kraken2_db} \
       --output ${sample_id}_kraken_output.txt \
       --report ${sample_id}_kraken_report.txt \

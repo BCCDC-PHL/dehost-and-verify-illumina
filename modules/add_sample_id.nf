@@ -1,6 +1,5 @@
 process add_sample_id {
     tag "$sample_id"
-    cpus 1
     executor 'local'
     
     input:
