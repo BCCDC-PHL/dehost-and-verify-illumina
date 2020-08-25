@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
+export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
+
 echo test pipeline.. >> artifacts/test_artifact.log
 
 export REF_FILE=${HOME}/data/chr22.fa
