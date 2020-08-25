@@ -42,16 +42,16 @@ jobs:
     - name: Set up conda cache environment
       if: steps.cache-conda-envs.outputs.cache-hit != 'true'
       run: bash .github/scripts/set_up_conda_cache.sh
-    - name: cache hg38
-      id: cache-hg38
+    - name: cache hg38_chr22
+      id: cache-hg38-chr22
       uses: actions/cache@v2
       with:
         path: |
-          /home/runner/data/hg38.fa*
-        key: hg38-v5
-    - name: download hg38
-      if: steps.cache-hg38.outputs.cache-hit != 'true'
-      run: bash .github/scripts/download_hg38.sh
+          /home/runner/data/chr22.fa*
+        key: hg38-chr22-v1
+    - name: download hg38 chr22
+      if: steps.cache-hg38-chr22.outputs.cache-hit != 'true'
+      run: bash .github/scripts/download_hg38_chr22.sh
     - name: cache kraken2/bracken db
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2
@@ -96,11 +96,11 @@ jobs:
         path: /home/runner/.conda/envs
         key: conda-envs-v2
     - name: load cache hg38
-      id: cache-hg38
+      id: cache-hg38-chr22
       uses: actions/cache@v2
       with:
-        path: /home/runner/data/hg38.fa
-        key: hg38-v5
+        path: /home/runner/data/chr22.fa*
+        key: hg38-chr22-v1
     - name: load cache kraken2/bracken db
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2

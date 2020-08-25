@@ -3,12 +3,16 @@ set -eo pipefail
 
 echo test pipeline.. >> artifacts/test_artifact.log
 
-export REF_FILE=${HOME}/data/hg38.fa
+export REF_FILE=${HOME}/data/chr22.fa
+export KRAKEN2_BRACKEN_DB=${HOME}/data/kraken2_bracken_db
 
 echo ref file: $REF_FILE
-echo bed file: $BED_FILE
+echo kraken2 db: $KRAKEN2_BRACKEN_DB
+echo bracken db: $KRAKEN2_BRACKEN_DB
+
 echo ref file: $REF_FILE >> artifacts/test_artifact.log
-echo bed file: $BED_FILE >> artifacts/test_artifact.log
+echo kraken2 db: $KRAKEN2_BRACKEN_DB >> artifacts/test_artifact.log
+echo bracken db: $KRAKEN2_BRACKEN_DB >> artifacts/test_artifact.log
 
 # run current pull request code
 
@@ -17,6 +21,9 @@ nextflow run ./main.nf \
        --cache ${HOME}/.conda/envs \
        --fastq_input ${REPO}/.github/data/fastqs \
        --host_reference ${REF_FILE} \
+       --kraken2_db ${KRAKEN2_BRACKEN_DB} \
+       --bracken_db ${KRAKEN2_BRACKEN_DB} \
+       --read_length 151 \
        --taxonomy_level 'S' \
        --host_name 'Homo sapiens' \
        --pathogen_name 'Severe acute respiratory syndrome-related coronavirus' \
