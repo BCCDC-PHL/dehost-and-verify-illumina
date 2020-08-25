@@ -11,7 +11,7 @@ process extract_fastq_from_bam {
     script:
     """
     samtools fastq \
-      -@ ${cpus} \
+      -@ ${task.cpus} \
       ${unmapped_bam} \
       -1 ${sample_id}_R1.fastq.gz \
       -2 ${sample_id}_R2.fastq.gz \

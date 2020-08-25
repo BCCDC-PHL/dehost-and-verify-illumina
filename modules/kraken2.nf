@@ -17,7 +17,7 @@ process kraken2 {
     }
     """
     kraken2 \
-      --threads ${cpus} \
+      --threads ${task.cpus} \
       --db ${kraken2_db} \
       --output ${sample_id}_kraken_output.txt \
       --report ${sample_id}_kraken_report.txt \

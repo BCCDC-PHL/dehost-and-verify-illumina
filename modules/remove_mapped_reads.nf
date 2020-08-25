@@ -10,7 +10,7 @@ process remove_mapped_reads {
     script:
     """
     samtools view \
-      -@ ${cpus} \
+      -@ ${task.cpus} \
       -f4 \
       -b  \
       -o ${sample_id}.unmapped.sorted.bam \
