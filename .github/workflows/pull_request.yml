@@ -45,8 +45,9 @@ jobs:
       id: cache-hg38
       uses: actions/cache@v2
       with:
-        path: /home/runner/data/hg38.fa
-        key: hg38-v3
+        path: |
+          /home/runner/data/hg38.fa*
+        key: hg38-v4
     - name: download hg38
       if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
@@ -98,7 +99,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /home/runner/data/hg38.fa
-        key: hg38-v3
+        key: hg38-v4
     - name: cache kraken2/bracken db
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2
