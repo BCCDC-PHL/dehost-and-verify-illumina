@@ -4,15 +4,12 @@ on:
     - master
 name: master Pull Request
 jobs:
-  test:
-    name: Run tests
+  prepare_caches:
+    name: Prepare caches
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
     - name: create artifacts dir to save test logs
-      run: mkdir artifacts
-    - name: check storage
-      run: df -h > artifacts/storage.txt
+      run: mkdir -p artifacts
     - name: cache miniconda3
       id: cache-miniconda3
       uses: actions/cache@v2
@@ -24,8 +21,6 @@ jobs:
     - name: install Conda
       if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
-    - name: init Conda
-      run: bash .github/scripts/init_conda.sh
     - name: cache nextflow
       id: cache-nextflow
       uses: actions/cache@v2
@@ -37,24 +32,6 @@ jobs:
     - name: install Nextflow
       if: steps.cache-nextflow.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_nextflow.sh
-    - name: cache ncov2019
-      id: cache-ncov2019
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/data/MN908947.3.fa
-        key: ncov2019-v1
-    - name: download ncov2019
-      if: steps.cache-ncov2019.outputs.cache-hit != 'true'
-      run: bash .github/scripts/download_ncov2019.sh
-    - name: cache hg38
-      id: cache-hg38
-      uses: actions/cache@v2
-      with:
-        path: /home/runner/data/hg38.fa
-        key: hg38-v2
-    - name: download hg38
-      if: steps.cache-hg38.outputs.cache-hit != 'true'
-      run: bash .github/scripts/download_hg38.sh
     - name: cache conda environments
       id: cache-conda-envs
       uses: actions/cache@v2
@@ -64,6 +41,15 @@ jobs:
     - name: Set up conda cache environment
       if: steps.cache-conda-envs.outputs.cache-hit != 'true'
       run: bash .github/scripts/set_up_conda_cache.sh
+    - name: cache hg38
+      id: cache-hg38
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/hg38.fa
+        key: hg38-v2
+    - name: download hg38
+      if: steps.cache-hg38.outputs.cache-hit != 'true'
+      run: bash .github/scripts/download_hg38.sh
     - name: cache kraken2/bracken db
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2
@@ -73,6 +59,11 @@ jobs:
     - name: create kraken2/bracken db
       if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
     - uses: actions/upload-artifact@v1
       if: always()
       with:
