@@ -107,6 +107,8 @@ jobs:
       with:
         path: /home/runner/data/kraken2_bracken_db
         key: kraken2_bracken_db-v2
+    - name: test pipeline
+      run: bash .github/scripts/test_pipeline.sh
     - uses: actions/upload-artifact@v1
       if: always()
       with:
