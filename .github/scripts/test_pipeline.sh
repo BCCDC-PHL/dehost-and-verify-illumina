@@ -26,7 +26,7 @@ nextflow run ./main.nf \
        --host_reference ${REF_FILE} \
        --kraken2_db ${KRAKEN2_BRACKEN_DB} \
        --bracken_db ${KRAKEN2_BRACKEN_DB} \
-       --read_length 151 \
+       --read_length 150 \
        --taxonomy_level 'S' \
        --host_name 'Homo sapiens' \
        --pathogen_name 'Severe acute respiratory syndrome-related coronavirus' \
