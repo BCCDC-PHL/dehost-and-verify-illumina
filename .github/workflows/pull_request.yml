@@ -48,7 +48,7 @@ jobs:
       with:
         path: |
           /home/runner/data/hg38.fa*
-        key: hg38-v4
+        key: hg38-v5
     - name: download hg38
       if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
@@ -73,7 +73,7 @@ jobs:
     - uses: actions/checkout@master
     - name: create artifacts dir to save test logs
       run: mkdir -p artifacts
-    - name: cache miniconda3
+    - name: load cache miniconda3
       id: cache-miniconda3
       uses: actions/cache@v2
       with:
@@ -81,7 +81,7 @@ jobs:
           /opt/miniconda3
           /home/runner/.bashrc
         key: miniconda3-v1
-    - name: cache nextflow
+    - name: load cache nextflow
       id: cache-nextflow
       uses: actions/cache@v2
       with:
@@ -89,19 +89,19 @@ jobs:
           /home/runner/bin/nextflow
           /home/runner/.nextflow
         key: nextflow-v2
-    - name: cache conda environments
+    - name: load cache conda environments
       id: cache-conda-envs
       uses: actions/cache@v2
       with:
         path: /home/runner/.conda/envs
         key: conda-envs-v2
-    - name: cache hg38
+    - name: load cache hg38
       id: cache-hg38
       uses: actions/cache@v2
       with:
         path: /home/runner/data/hg38.fa
-        key: hg38-v4
-    - name: cache kraken2/bracken db
+        key: hg38-v5
+    - name: load cache kraken2/bracken db
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2
       with:
