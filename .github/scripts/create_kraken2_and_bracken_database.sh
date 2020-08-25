@@ -18,9 +18,10 @@ mkdir -p $KRAKEN2_DB_NAME/taxonomy
 rsync --no-motd rsync://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz $KRAKEN2_DB_NAME/taxonomy
 tar -C $KRAKEN2_DB_NAME/taxonomy -xvf $KRAKEN2_DB_NAME/taxonomy/taxdump.tar.gz
 cp ${REPO}/.github/data/kraken2/nucl_gb_only_human_and_sars-cov-2.accession2taxid $KRAKEN2_DB_NAME/taxonomy
-kraken2-build --db $KRAKEN2_DB_NAME --download-library human --no-mask
+sed 's/>/>kraken:taxid|9606|/' ${HOME}/data/chr22.fa > chr22.kraken_annotated.fa
+kraken2-build --db $KRAKEN2_DB_NAME --add-to-library chr22.kraken_annotated.fa
 kraken2-build --db $KRAKEN2_DB_NAME --add-to-library ${REPO}/.github/data/kraken2/MN908947.3.kraken_annotated.fa
-kraken2-build --db $KRAKEN2_DB_NAME --build --max-db-size 1000000000
+kraken2-build --db $KRAKEN2_DB_NAME --build --max-db-size 500000000
 
 bracken-build -d $KRAKEN2_DB_NAME -l 150
 
