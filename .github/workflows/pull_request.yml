@@ -95,7 +95,7 @@ jobs:
       with:
         path: /home/runner/.conda/envs
         key: conda-envs-v2
-    - name: load cache hg38
+    - name: load cache hg38 chr22
       id: cache-hg38-chr22
       uses: actions/cache@v2
       with:
