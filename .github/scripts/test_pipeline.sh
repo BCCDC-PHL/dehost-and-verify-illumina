@@ -5,6 +5,7 @@ export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
 
 echo test pipeline.. >> artifacts/test_artifact.log
 
+REPO=${PWD}
 export REF_FILE=${HOME}/data/chr22.fa
 export KRAKEN2_BRACKEN_DB=${HOME}/data/kraken2_bracken_db
 
@@ -36,4 +37,4 @@ cp .nextflow.log artifacts/test.nextflow.log
 cp -r test_output artifacts
 
 
-rm -rf results && rm -rf work && rm -rf .nextflow*
+rm -rf test_output && rm -rf work && rm -rf .nextflow*
