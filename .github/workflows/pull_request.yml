@@ -22,7 +22,7 @@ jobs:
           ${HOME}/.bashrc
         key: miniconda3
     - name: install Conda
-      # if: steps.cache-miniconda3.outputs.cache-hit != 'true'
+      if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
     - name: init Conda
       run: bash .github/scripts/init_conda.sh
@@ -51,18 +51,18 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${HOME}/data/hg38.fa
-        key: hg38
+        key: hg38-v1
     - name: download hg38
-      # if: steps.cache-hg38.outputs.cache-hit != 'true'
+      if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
     - name: cache conda environments
       id: cache-conda-envs
       uses: actions/cache@v2
       with:
         path: ${HOME}/.conda/envs
-        key: conda-envs
+        key: conda-envs-v1
     - name: Set up conda cache environment
-      # if: steps.cache-conda-envs.outputs.cache-hit != 'true'
+      if: steps.cache-conda-envs.outputs.cache-hit != 'true'
       run: bash .github/scripts/set_up_conda_cache.sh
     - name: cache kraken2/bracken db
       id: cache-kraken2-bracken-db
@@ -71,7 +71,7 @@ jobs:
         path: ${HOME}/data/kraken2_bracken_db
         key: kraken2_bracken_db
     - name: create kraken2/bracken db
-      # if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
+      if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
     - uses: actions/upload-artifact@v1
       if: always()
