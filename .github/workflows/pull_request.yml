@@ -19,8 +19,8 @@ jobs:
       with:
         path: |
           /opt/miniconda3
-          ${HOME}/.bashrc
-        key: miniconda3
+          /home/runner/.bashrc
+        key: miniconda3-v1
     - name: install Conda
       if: steps.cache-miniconda3.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_conda.sh
@@ -31,9 +31,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          ${HOME}/bin/nextflow
-          ${HOME}/.nextflow
-        key: nextflow-v1
+          /home/runner/bin/nextflow
+          /home/runner/.nextflow
+        key: nextflow-v2
     - name: install Nextflow
       if: steps.cache-nextflow.outputs.cache-hit != 'true'
       run: bash .github/scripts/install_nextflow.sh
@@ -41,17 +41,17 @@ jobs:
       id: cache-ncov2019
       uses: actions/cache@v2
       with:
-        path: ${HOME}/data/MN908947.3.fa
-        key: ncov2019
+        path: /home/runner/data/MN908947.3.fa
+        key: ncov2019-v1
     - name: download ncov2019
-      # if: steps.cache-ncov2019.outputs.cache-hit != 'true'
+      if: steps.cache-ncov2019.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_ncov2019.sh
     - name: cache hg38
       id: cache-hg38
       uses: actions/cache@v2
       with:
-        path: ${HOME}/data/hg38.fa
-        key: hg38-v1
+        path: /home/runner/data/hg38.fa
+        key: hg38-v2
     - name: download hg38
       if: steps.cache-hg38.outputs.cache-hit != 'true'
       run: bash .github/scripts/download_hg38.sh
@@ -59,8 +59,8 @@ jobs:
       id: cache-conda-envs
       uses: actions/cache@v2
       with:
-        path: ${HOME}/.conda/envs
-        key: conda-envs-v1
+        path: /home/runner/.conda/envs
+        key: conda-envs-v2
     - name: Set up conda cache environment
       if: steps.cache-conda-envs.outputs.cache-hit != 'true'
       run: bash .github/scripts/set_up_conda_cache.sh
@@ -68,8 +68,8 @@ jobs:
       id: cache-kraken2-bracken-db
       uses: actions/cache@v2
       with:
-        path: ${HOME}/data/kraken2_bracken_db
-        key: kraken2_bracken_db
+        path: /home/runner/data/kraken2_bracken_db
+        key: kraken2_bracken_db-v2
     - name: create kraken2/bracken db
       if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
       run: bash .github/scripts/create_kraken2_and_bracken_database.sh
