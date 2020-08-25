@@ -1,0 +1,116 @@
+on:
+  pull_request:
+    branches:
+    - master
+name: master Pull Request
+jobs:
+  prepare_caches:
+    name: Prepare caches
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: create artifacts dir to save test logs
+      run: mkdir -p artifacts
+    - name: cache miniconda3
+      id: cache-miniconda3
+      uses: actions/cache@v2
+      with:
+        path: |
+          /opt/miniconda3
+          /home/runner/.bashrc
+        key: miniconda3-v1
+    - name: install Conda
+      if: steps.cache-miniconda3.outputs.cache-hit != 'true'
+      run: bash .github/scripts/install_conda.sh
+    - name: cache nextflow
+      id: cache-nextflow
+      uses: actions/cache@v2
+      with:
+        path: |
+          /home/runner/bin/nextflow
+          /home/runner/.nextflow
+        key: nextflow-v2
+    - name: install Nextflow
+      if: steps.cache-nextflow.outputs.cache-hit != 'true'
+      run: bash .github/scripts/install_nextflow.sh
+    - name: cache conda environments
+      id: cache-conda-envs
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/.conda/envs
+        key: conda-envs-v2
+    - name: Set up conda cache environment
+      if: steps.cache-conda-envs.outputs.cache-hit != 'true'
+      run: bash .github/scripts/set_up_conda_cache.sh
+    - name: cache hg38_chr22
+      id: cache-hg38-chr22
+      uses: actions/cache@v2
+      with:
+        path: |
+          /home/runner/data/chr22.fa*
+        key: hg38-chr22-v1
+    - name: download hg38 chr22
+      if: steps.cache-hg38-chr22.outputs.cache-hit != 'true'
+      run: bash .github/scripts/download_hg38_chr22.sh
+    - name: cache kraken2/bracken db
+      id: cache-kraken2-bracken-db
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/kraken2_bracken_db
+        key: kraken2_bracken_db-v3
+    - name: create kraken2/bracken db
+      if: steps.cache-kraken2-bracken-db.outputs.cache-hit != 'true'
+      run: bash .github/scripts/create_kraken2_and_bracken_database.sh
+    - uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: cache_artifacts
+        path: artifacts
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: create artifacts dir to save test logs
+      run: mkdir -p artifacts
+    - name: load cache miniconda3
+      id: cache-miniconda3
+      uses: actions/cache@v2
+      with:
+        path: |
+          /opt/miniconda3
+          /home/runner/.bashrc
+        key: miniconda3-v1
+    - name: load cache nextflow
+      id: cache-nextflow
+      uses: actions/cache@v2
+      with:
+        path: |
+          /home/runner/bin/nextflow
+          /home/runner/.nextflow
+        key: nextflow-v2
+    - name: load cache conda environments
+      id: cache-conda-envs
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/.conda/envs
+        key: conda-envs-v2
+    - name: load cache hg38 chr22
+      id: cache-hg38-chr22
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/chr22.fa*
+        key: hg38-chr22-v1
+    - name: load cache kraken2/bracken db
+      id: cache-kraken2-bracken-db
+      uses: actions/cache@v2
+      with:
+        path: /home/runner/data/kraken2_bracken_db
+        key: kraken2_bracken_db-v3
+    - name: test pipeline
+      run: bash .github/scripts/test_pipeline.sh
+    - uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: test_artifacts
+        path: artifacts

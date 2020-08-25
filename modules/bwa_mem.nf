@@ -1,5 +1,6 @@
 process bwa_mem {
     tag { sample_id }
+    label 'cpu8'
 
     input:
     tuple val(grouping_key), path(fastq), val(reference)
@@ -22,12 +23,12 @@ process bwa_mem {
     ln -s ${reference}.pac .
     ln -s ${reference}.sa .
     bwa mem \
-      -t 8 \
+      -t ${task.cpus} \
       ${reference} \
       ${fastq} \
       | samtools sort \
         -n \
-        -@ 8 \
+        -@ ${task.cpus} \
         -T "temp" \
         -O BAM \
         -o ${sample_id}.sorted.bam \

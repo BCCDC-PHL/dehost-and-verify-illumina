@@ -1,5 +1,6 @@
 process remove_mapped_reads {
     tag { sample_id }
+    label 'cpu4'
 
     input:
     tuple val(sample_id), path(sorted_bam)
@@ -10,7 +11,7 @@ process remove_mapped_reads {
     script:
     """
     samtools view \
-      -@ 4 \
+      -@ ${task.cpus} \
       -f4 \
       -b  \
       -o ${sample_id}.unmapped.sorted.bam \
