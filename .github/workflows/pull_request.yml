@@ -64,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: create artifacts dir to save test logs
+      run: mkdir -p artifacts
     - uses: actions/upload-artifact@v1
       if: always()
       with:
