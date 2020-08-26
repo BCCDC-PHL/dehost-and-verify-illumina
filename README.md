@@ -12,3 +12,34 @@ This pipeline performs the following tasks:
 ![workflow.png][]
 
 [workflow.png]: doc/images/workflow.png
+
+## Parameters
+
+| Parameter        | Default Value | Description |
+| ---------------- | ------------- | ----------- |
+| `kraken2_db`     |  | Path to kraken2 database |
+| `bracken_db`     |  | Path to bracken database |
+| `host_reference` |  | Path to host reference genome |
+| `taxonomy_level` | `'S'` | Taxonomic level at which to group reads (`'S'` = Species) |
+| `read_length`    | `150` | Input sequence read length. Must match bracken database. |
+| `host_name`      | `'Homo sapiens'` | Name of host. Must match name in kraken2 database. |
+| `pathogen_name`  | `'Severe acute respiratory syndrome-related coronavirus'` | Name of pathogen of interest. Must match name in kraken2 database. |
+
+## Preparing Reference Datasets
+
+Build a kraken2 database.
+```
+kraken2-build --db <path_to_kraken2_db> --standard
+```
+
+Build the bracken database.
+```
+bracken-build -d <path_to_kraken2_db> -l <read_length>
+```
+
+Index the host reference genome.
+```
+bwa index <path_to_host_reference>
+```
+
+## Outputs
