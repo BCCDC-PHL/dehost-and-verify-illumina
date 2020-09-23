@@ -49,6 +49,18 @@ def parse_bracken_output(path_to_bracken_output):
 
     return bracken_output
 
+def get_analysis_stage(path_to_bracken_output):
+    """
+    Parse for and return 'analysis_stage' in file path.
+    Under development.
+    """
+    if path_to_bracken_output.endswith('_pre_dehosting.txt'):
+        analysis_stage = '_pre_dehosting'
+    elif path_to_bracken_output.endswith('_post_dehosting.txt'):
+        analysis_stage ='_post_dehosting'
+    else:
+        analysis_stage = '_default_analysis_stage'
+    return analysis_stage
 
 def calculate_total_reads(parsed_bracken_output):
     total_reads = 0
@@ -74,19 +86,21 @@ def main(args):
     host_reads = get_estimated_reads_by_name(bracken_output, args.host_name)
     pathogen_reads = get_estimated_reads_by_name(bracken_output, args.pathogen_name)
     other_reads = total_reads - host_reads - pathogen_reads
+    #analysis_stage = str(args.bracken_output)
+    analysis_stage = get_analysis_stage(args.bracken_output)
 
     output = [
         {
-            'pathogen_reads': pathogen_reads,
-            'host_reads': host_reads,
-            'other_reads': other_reads,
+            'pathogen_reads_' + analysis_stage: pathogen_reads,
+            'host_reads_' + analysis_stage: host_reads,
+            'other_reads_' + analysis_stage: other_reads,
         },
     ]
 
     output_fieldnames = [
-        'pathogen_reads',
-        'host_reads',
-        'other_reads',
+        'pathogen_reads_'+ analysis_stage,
+        'host_reads_' + analysis_stage,
+        'other_reads_'+ analysis_stage,
     ]
     
     writer = csv.DictWriter(sys.stdout, fieldnames=output_fieldnames, dialect='excel-tab')
@@ -102,5 +116,6 @@ if __name__ == '__main__':
     parser.add_argument('--host_name')
     parser.add_argument('--pathogen_name')
     parser.add_argument('bracken_output')
+    parser.add_argument('--analysis_stage')
     args = parser.parse_args()
     main(args)
