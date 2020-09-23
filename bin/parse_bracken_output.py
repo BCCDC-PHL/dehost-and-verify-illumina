@@ -55,11 +55,11 @@ def get_analysis_stage(path_to_bracken_output):
     Under development.
     """
     if path_to_bracken_output.endswith('_pre_dehosting.txt'):
-        analysis_stage = '_pre_dehosting'
+        analysis_stage = 'pre_dehosting'
     elif path_to_bracken_output.endswith('_post_dehosting.txt'):
-        analysis_stage ='_post_dehosting'
+        analysis_stage ='post_dehosting'
     else:
-        analysis_stage = '_default_analysis_stage'
+        analysis_stage = 'unknown_analysis_stage'
     return analysis_stage
 
 def calculate_total_reads(parsed_bracken_output):
