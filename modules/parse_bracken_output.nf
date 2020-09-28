@@ -13,6 +13,7 @@ process parse_bracken_output {
     parse_bracken_output.py \
       --host_name "${host_name}" \
       --pathogen_name "${pathogen_name}" \
+      --analysis_stage ${analysis_stage} \
       ${bracken_output} > ${sample_id}_pathogen_host_read_summary_${analysis_stage}.tsv
     """
 }
