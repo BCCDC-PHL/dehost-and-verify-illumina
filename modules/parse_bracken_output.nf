@@ -11,6 +11,7 @@ process parse_bracken_output {
     script:
     """
     parse_bracken_output.py \
+      --sample_id ${sample_id} \
       --host_name "${host_name}" \
       --pathogen_name "${pathogen_name}" \
       --analysis_stage ${analysis_stage} \
