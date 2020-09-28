@@ -86,8 +86,9 @@ def main(args):
     host_reads = get_estimated_reads_by_name(bracken_output, args.host_name)
     pathogen_reads = get_estimated_reads_by_name(bracken_output, args.pathogen_name)
     other_reads = total_reads - host_reads - pathogen_reads
-    #analysis_stage = str(args.bracken_output)
-    analysis_stage = get_analysis_stage(args.bracken_output)
+    analysis_stage = args.analysis_stage
+    # REMEMBER TO GET RID OF UN-USED FUNCTION!
+    #analysis_stage = get_analysis_stage(args.bracken_output)
 
     output = [
         {
@@ -115,7 +116,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--host_name')
     parser.add_argument('--pathogen_name')
-    parser.add_argument('bracken_output')
     parser.add_argument('--analysis_stage')
+    parser.add_argument('bracken_output')
+
     args = parser.parse_args()
     main(args)
