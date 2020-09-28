@@ -86,7 +86,7 @@ def main(args):
     ]
 
     output_fieldnames = [
-        'sample_id': sample_id,
+        'sample_id',
         'pathogen_reads_'+ analysis_stage,
         'host_reads_' + analysis_stage,
         'other_reads_'+ analysis_stage,
