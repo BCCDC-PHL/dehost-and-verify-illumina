@@ -49,19 +49,6 @@ def parse_bracken_output(path_to_bracken_output):
 
     return bracken_output
 
-def get_analysis_stage(path_to_bracken_output):
-    """
-    Parse for and return 'analysis_stage' in file path.
-    Under development.
-    """
-    if path_to_bracken_output.endswith('_pre_dehosting.txt'):
-        analysis_stage = 'pre_dehosting'
-    elif path_to_bracken_output.endswith('_post_dehosting.txt'):
-        analysis_stage ='post_dehosting'
-    else:
-        analysis_stage = 'unknown_analysis_stage'
-    return analysis_stage
-
 def calculate_total_reads(parsed_bracken_output):
     total_reads = 0
     for record in parsed_bracken_output:
@@ -87,8 +74,6 @@ def main(args):
     pathogen_reads = get_estimated_reads_by_name(bracken_output, args.pathogen_name)
     other_reads = total_reads - host_reads - pathogen_reads
     analysis_stage = args.analysis_stage
-    # REMEMBER TO GET RID OF UN-USED FUNCTION!
-    #analysis_stage = get_analysis_stage(args.bracken_output)
 
     output = [
         {
