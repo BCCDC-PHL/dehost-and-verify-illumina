@@ -5,6 +5,7 @@ nextflow.enable.dsl = 2
 include { estimate_abundance as estimate_abundance_pre_dehosting } from './workflows/estimate_abundance.nf'
 include { estimate_abundance as estimate_abundance_post_dehosting } from './workflows/estimate_abundance.nf'
 include { dehost } from './workflows/dehost.nf'
+include { combine_pre_and_post_dehosting } from '../modules/combine_pre_and_post_dehosting.nf'
 
 if (params.profile){
     println("Profile should have a single dash: -profile")
