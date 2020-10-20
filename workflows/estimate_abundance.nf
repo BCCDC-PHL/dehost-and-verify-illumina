@@ -36,4 +36,7 @@ workflow estimate_abundance {
 	.combine(ch_analysis_stage)
     )
 
+  emit:
+    estimate_abundance_output = parse_bracken_output.out   
+
 }
