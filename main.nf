@@ -5,7 +5,7 @@ nextflow.enable.dsl = 2
 include { estimate_abundance as estimate_abundance_pre_dehosting } from './workflows/estimate_abundance.nf'
 include { estimate_abundance as estimate_abundance_post_dehosting } from './workflows/estimate_abundance.nf'
 include { dehost } from './workflows/dehost.nf'
-include { combine_pre_and_post_dehosting } from '../modules/combine_pre_and_post_dehosting.nf'
+include { combine_pre_and_post_dehosting } from './modules/combine_pre_and_post_dehosting.nf'
 
 if (params.profile){
     println("Profile should have a single dash: -profile")
@@ -50,5 +50,9 @@ workflow {
 	ch_post_dehosting_stage,
 	ch_host_name,
 	ch_pathogen_name
+      )
+
+      combine_pre_and_post_dehosting(estimate_abundance_pre_dehosting.out.estimate_abundance_output.join(estimate_abundance_post_dehosting.out.estimate_abundance_output, by: 0)
+
       )
 }
