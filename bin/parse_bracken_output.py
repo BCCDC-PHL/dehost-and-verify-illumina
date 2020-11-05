@@ -91,8 +91,9 @@ def main(args):
         'host_reads_' + analysis_stage,
         'other_reads_'+ analysis_stage,
     ]
-    
-    writer = csv.DictWriter(sys.stdout, fieldnames=output_fieldnames, dialect='excel-tab')
+
+    csv.register_dialect('unix-tab', delimiter='\t', doublequote=False, lineterminator='\n', quoting=csv.QUOTE_MINIMAL)
+    writer = csv.DictWriter(sys.stdout, fieldnames=output_fieldnames, dialect='unix-tab')
 
     writer.writeheader()
     
