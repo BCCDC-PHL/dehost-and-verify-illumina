@@ -6,7 +6,7 @@ process combine_pre_and_post_dehosting {
     tuple val(sample_id), path(pre_dehosting), path(post_dehosting)
 
     output:
-    tuple val(sample_id), path("${sample_id}_dehosting_report.tsv")
+    path("${sample_id}_dehosting_report.tsv")
     
     script:
     """

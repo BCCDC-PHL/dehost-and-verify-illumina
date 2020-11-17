@@ -52,7 +52,10 @@ workflow {
 	ch_pathogen_name
       )
 
-      combine_pre_and_post_dehosting(estimate_abundance_pre_dehosting.out.estimate_abundance_output.join(estimate_abundance_post_dehosting.out.estimate_abundance_output, by: 0)
-
+      combine_pre_and_post_dehosting(
+	estimate_abundance_pre_dehosting.out.estimate_abundance_output
+	   .join(estimate_abundance_post_dehosting.out.estimate_abundance_output, by: 0)
       )
+
+     combine_pre_and_post_dehosting.out.collectFile(name: 'dehosting_summary.tsv', storeDir: "${params.outdir}", keepHeader: true) 
 }
