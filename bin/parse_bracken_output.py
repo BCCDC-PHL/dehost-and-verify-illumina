@@ -49,7 +49,6 @@ def parse_bracken_output(path_to_bracken_output):
 
     return bracken_output
 
-
 def calculate_total_reads(parsed_bracken_output):
     total_reads = 0
     for record in parsed_bracken_output:
@@ -74,19 +73,23 @@ def main(args):
     host_reads = get_estimated_reads_by_name(bracken_output, args.host_name)
     pathogen_reads = get_estimated_reads_by_name(bracken_output, args.pathogen_name)
     other_reads = total_reads - host_reads - pathogen_reads
+    analysis_stage = args.analysis_stage
+    sample_id = args.sample_id
 
     output = [
         {
-            'pathogen_reads': pathogen_reads,
-            'host_reads': host_reads,
-            'other_reads': other_reads,
+            'sample_id': sample_id,
+            'pathogen_reads_' + analysis_stage: pathogen_reads,
+            'host_reads_' + analysis_stage: host_reads,
+            'other_reads_' + analysis_stage: other_reads,
         },
     ]
 
     output_fieldnames = [
-        'pathogen_reads',
-        'host_reads',
-        'other_reads',
+        'sample_id',
+        'pathogen_reads_'+ analysis_stage,
+        'host_reads_' + analysis_stage,
+        'other_reads_'+ analysis_stage,
     ]
 
     csv.register_dialect('unix-tab', delimiter='\t', doublequote=False, lineterminator='\n', quoting=csv.QUOTE_MINIMAL)
@@ -100,8 +103,11 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--sample_id')
     parser.add_argument('--host_name')
     parser.add_argument('--pathogen_name')
+    parser.add_argument('--analysis_stage')
     parser.add_argument('bracken_output')
+
     args = parser.parse_args()
     main(args)
