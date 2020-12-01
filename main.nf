@@ -13,7 +13,7 @@ if (params.profile){
 }
 
 workflow {
-    Channel.fromFilePairs( "${params.fastq_input}/*_R{1,2}*.fastq.gz", type: 'file', maxDepth: 1 ).set{ ch_fastq }
+    Channel.fromFilePairs( "${params.fastq_input}/*_R{1,2}*.fastq.gz", type: 'file', maxDepth: 1 ).filter{!( it[0] =~ /Undetermined/ ) }.set{ ch_fastq }
     Channel.fromPath( "${params.kraken2_db}", type: 'dir').set{ ch_kraken2_db }
     Channel.fromPath( "${params.bracken_db}", type: 'dir').set{ ch_bracken_db }
     ch_read_length = Channel.of(params.read_length)
