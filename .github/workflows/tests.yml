@@ -32,7 +32,7 @@ jobs:
       env:
         NXF_VER: ${{ matrix.nextflow_version }}
       run: bash .github/scripts/test_pipeline.sh
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: artifacts-BCCDC-PHL-dehost-and-verify-illumina-nextflow-v${{ matrix.nextflow_version }}-${{ github.run_id }}.${{ github.run_attempt }}
