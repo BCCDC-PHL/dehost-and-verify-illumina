@@ -1,0 +1,35 @@
+on:
+  pull_request:
+    branches:
+    - master
+
+name: Tests
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        nextflow_version: ["21.04.3", "23.10.1", "24.04.3"]
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Create artifacts dir to save test logs
+      run: mkdir -p artifacts
+    - name: Install Conda
+      run: bash .github/scripts/install_conda.sh
+    - name: Install Nextflow
+      run: bash .github/scripts/install_nextflow.sh
+    - name: Set up conda cache environment
+      run: bash .github/scripts/set_up_conda_cache.sh
+    - name: Download hg38 chr22
+      run: bash .github/scripts/download_hg38_chr22.sh
+    - name: Create kraken2/bracken db
+      run: bash .github/scripts/create_kraken2_and_bracken_database.sh
+    - name: Run Pipeline
+      run: bash .github/scripts/test_pipeline.sh
+    - uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: artifacts-BCCDC-PHL-dehost-and-verify-illumina-nextflow-v${{ matrix.nextflow_version }}-${{ github.run_id }}.${{ github.run_attempt }}
+        path: artifacts
