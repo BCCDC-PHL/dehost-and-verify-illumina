@@ -5,7 +5,6 @@ export PATH=${HOME}/bin:/opt/miniconda3/bin:$PATH
 
 echo test pipeline.. >> artifacts/test_artifact.log
 
-REPO=${PWD}
 export REF_FILE=${HOME}/data/chr22.fa
 export KRAKEN2_BRACKEN_DB=${HOME}/data/kraken2_bracken_db
 
@@ -19,10 +18,19 @@ echo bracken db: $KRAKEN2_BRACKEN_DB >> artifacts/test_artifact.log
 
 # run current pull request code
 
+if [ -z "${GITHUB_ACTIONS}" ]; then 
+    echo "Not in GitHub Actions environment. Will not modify nextflow.config"
+else
+    echo "In GitHub Actions environment. Modifying nextflow.config"
+    sed -i 's/cpus = 8/cpus = 4/g' nextflow.config
+    sed -i "s/memory = '72 GB'/memory = '8 GB'/g" nextflow.config
+fi
+
+
 nextflow run ./main.nf \
-       -profile githubtest,conda \
+       -profile conda \
        --cache ${HOME}/.conda/envs \
-       --fastq_input ${REPO}/.github/data/fastqs \
+       --fastq_input .github/data/fastqs \
        --host_reference ${REF_FILE} \
        --kraken2_db ${KRAKEN2_BRACKEN_DB} \
        --bracken_db ${KRAKEN2_BRACKEN_DB} \
